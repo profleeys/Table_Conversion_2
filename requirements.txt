@@ -2,3 +2,4 @@ streamlit==1.25.0
 lxml==4.9.2
 openpyxl==3.0.10
 camelot-py==0.11.0
+opencv-python==4.8.0.74
