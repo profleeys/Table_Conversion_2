@@ -23,13 +23,8 @@ def swap_columns(row):
     return row
 
 def extract_tables_from_pdf(pdf_file, output_excel):
-    with open("input.pdf", "wb") as f:
-        base64_pdf = base64.b64encode(pdf_file.read()).decode('utf-8')
-        f.write(base64.b64decode(base64_pdf))
-    f.close()
-
     # 使用camelot-py從pdf中讀取表格數據
-    tables = camelot.read_pdf("input.pdf", flavor='stream', pages='all')
+    tables = camelot.read_pdf(pdf_file, flavor='stream', pages='all')
 
     # 合併所有表格到一個DataFrame中
     all_tables_data = pd.DataFrame()
@@ -89,7 +84,7 @@ if __name__ == '__main__':
     col1, col2, col3, col4, col5 = st.columns(5)
     
     if col1.button('轉換檔案') and file is not None:
-        extract_tables_from_pdf(file, "converted")
+        extract_tables_from_pdf(file.name, "converted")
         
         #with open('converted.xlsx', 'rb') as f:
         #    data = f.read()
