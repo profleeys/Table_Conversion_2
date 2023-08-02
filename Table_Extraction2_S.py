@@ -24,7 +24,7 @@ def swap_columns(row):
 
 def extract_tables_from_pdf(pdf_file, output_excel):
     with open("input.pdf", "wb") as f:
-        base64_pdf = base64.b64encode(pdf_file.read()).decode()
+        base64_pdf = base64.b64encode(pdf_file.getvalue()).decode()
         f.write(base64.b64decode(base64_pdf))
     f.close()
 
