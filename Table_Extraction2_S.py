@@ -3,6 +3,7 @@ import camelot
 import numpy as np
 import pandas as pd
 import base64
+import io
 
 def create_download_link(data, filename):
     b64 = base64.b64encode(data).decode()  # 將檔案數據轉換為 base64 編碼
@@ -23,10 +24,19 @@ def swap_columns(row):
     return row
 
 def extract_tables_from_pdf(pdf_file, output_excel):
+    #with open("input.pdf", "wb") as f:
+    #    base64_pdf = base64.b64encode(pdf_file.getbuffer()).decode()
+    #    f.write(base64.b64decode(base64_pdf))
+    #f.close()
+
+    # Use BytesIO to create a file-like object in memory
+    buffer = io.BytesIO()
+    buffer.write(pdf_file.read())
+
+    # Now you can manipulate the file data in memory
+    # For example, you can save it to a file on your local machine
     with open("input.pdf", "wb") as f:
-        base64_pdf = base64.b64encode(pdf_file.getbuffer()).decode()
-        f.write(base64.b64decode(base64_pdf))
-    f.close()
+        f.write(buffer.getbuffer())
 
     # 使用camelot-py從pdf中讀取表格數據
     tables = camelot.read_pdf("input.pdf", flavor='stream', pages='all')
