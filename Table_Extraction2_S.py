@@ -79,6 +79,13 @@ def extract_tables_from_pdf(pdf_file, output_excel):
     
     result_df = result_df.apply(swap_columns, axis=1)
     result_df.iloc[:, 0] = result_df.iloc[:, 0].fillna(method='ffill', axis=0)
+    
+    # 刪除第6個及第8個欄位
+    result_df.drop(result_df.columns[[5, 7]], axis=1, inplace=True)
+    
+    # 重新命名剩下的10個欄位
+    new_column_names = ['區鄉', '里村', '納稅單位', '綜合所得總額', '平均數', '中位數', '第一分位數', '第三分位數', '標準差', '變異係數']
+    result_df.olumns = new_column_names
 
     # 創建一個新的Excel文件
     writer = pd.ExcelWriter(output_excel+".xlsx", engine='xlsxwriter')
